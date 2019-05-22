@@ -35,7 +35,7 @@ def first_pass( commands ):
 
     if vary and num_frames == 1:
         print("No vary value given for animation.")
-        return
+        quit()
 
     if name == '':
         name = 'default_gif'
@@ -66,6 +66,18 @@ def second_pass( commands, num_frames ):
     for c in commands:
         if c['op'] == 'vary':
             args = c['args']
+            start_frame = int(args[0])
+            end_frame = int(args[1])
+            knob = c['knob']
+            start_knob = float(args[2])
+            end_knob = float(args[3])
+            d_k = (end_knob-start_knob)/(end_frame-start_frame)
+            for i in range(start_frame, end_frame):
+                start_knob+=d_k
+                frames[i][knob] = start_knob
+
+    print(frames)
+
 
     return frames
 
@@ -105,7 +117,6 @@ def run(filename):
     (name, num_frames) = first_pass(commands)
     frames = second_pass(commands, num_frames)
 
-    print(name, num_frames)
     tmp = new_matrix()
     ident( tmp )
 
@@ -118,6 +129,7 @@ def run(filename):
     coords = []
     coords1 = []
 
+    # for frame in num_frames:
     for command in commands:
         print command
         c = command['op']
