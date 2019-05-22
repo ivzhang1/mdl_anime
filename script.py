@@ -128,9 +128,8 @@ def run(filename):
     coords1 = []
     counter = 0
     for frame in frames:
-
+        print counter
         for command in commands:
-            print command
             c = command['op']
             args = command['args']
             knob_value = 1
@@ -199,7 +198,7 @@ def run(filename):
                 if knob:
                     theta = args[1] * symbols[knob] * (math.pi/180)
                 else:
-                    theta = symbols[knob] * (math.pi/180)
+                    theta = args[1]* (math.pi/180)
 
 
                 if args[0] == 'x':
@@ -220,7 +219,10 @@ def run(filename):
             elif c == 'save':
                 save_extension(screen, args[0])
 
-        save_extension(screen, "./anim/"+name+str(counter))
+        diff = len(str(num_frames)) - len(str(counter))
+
+        add_string = "0" * diff + str(counter)
+        save_extension(screen, "./anim/"+name+add_string)
         tmp = new_matrix()
         ident( tmp )
         stack = [ [x[:] for x in tmp] ]
