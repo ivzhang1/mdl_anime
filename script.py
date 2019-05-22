@@ -33,7 +33,7 @@ def first_pass( commands ):
         elif c['op'] == 'vary':
             vary = True
 
-    if vary and frames == 1:
+    if vary and num_frames == 1:
         print("No vary value given for animation.")
         return
 
@@ -62,6 +62,10 @@ def first_pass( commands ):
   ===================="""
 def second_pass( commands, num_frames ):
     frames = [ {} for i in range(num_frames) ]
+
+    for c in commands:
+        if c['op'] == 'vary':
+            args = c['args']
 
     return frames
 
@@ -101,7 +105,7 @@ def run(filename):
     (name, num_frames) = first_pass(commands)
     frames = second_pass(commands, num_frames)
 
-
+    print(name, num_frames)
     tmp = new_matrix()
     ident( tmp )
 
