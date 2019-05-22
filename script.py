@@ -228,4 +228,5 @@ def run(filename):
         zbuffer = new_zbuffer()
         counter+=1
 
+    make_animation(name)
         # end operation loop
