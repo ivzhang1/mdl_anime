@@ -3,7 +3,7 @@ from display import *
 from matrix import *
 from draw import *
 
-"""======== first_pass( commands ) ==========
+"""======== ss( commands ) ==========
 
   Checks the commands array for any animation commands
   (frames, basename, vary)
@@ -22,6 +22,24 @@ def first_pass( commands ):
 
     name = ''
     num_frames = 1
+    vary = False
+    for c in commands:
+        if c['op'] == 'basename':
+            name = c['args'][0]
+
+        elif c['op'] == 'frames':
+            num_frames = int(c['args'][0])
+
+        elif c['op'] == 'vary':
+            vary = True
+
+    if vary and frames == 1:
+        print("No vary value given for animation.")
+        return
+
+    if name == '':
+        name = 'default_gif'
+        print("No basename given. Using default value of 'default_gif'.")
 
     return (name, num_frames)
 
